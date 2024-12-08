@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tambah Tugas</title>
+  </head>
+  <body>
+    {% extends 'tasks/base.html' %} {% block content %}
+    <h1 class="text-center mb-4">Tambah Tugas</h1>
+
+    <form method="POST" class="card p-4">
+      {% csrf_token %} {{ form.as_p }}
+      <button type="submit" class="btn btn-success">Tambah Tugas</button>
+      <a href="{% url 'home' %}" class="btn btn-secondary">Kembali</a>
+    </form>
+    {% endblock %}
+  </body>
+</html>
