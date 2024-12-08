@@ -107,6 +107,12 @@
             </td>
             <td>
               <a
+                href="{% url 'task_detail' task.pk %}"
+                class="btn btn-sm btn-info"
+                >Lihat Detail</a
+              >
+
+              <a
                 href="{% url 'edit_task' task.pk %}"
                 class="btn btn-sm btn-primary"
                 >Edit</a

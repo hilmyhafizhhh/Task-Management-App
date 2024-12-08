@@ -143,3 +143,16 @@ from django.views.generic import TemplateView
 # View untuk halaman About
 class AboutView(TemplateView):
     template_name = 'tasks/about.html'
+
+# views.py
+
+# views.py
+from django.shortcuts import render
+from django.views.generic import DetailView
+from .models import Task
+
+class TaskDetailView(DetailView):
+    model = Task
+    template_name = 'tasks/task_detail.html'
+    context_object_name = 'task'
+
