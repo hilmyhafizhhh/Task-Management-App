@@ -1,12 +1,13 @@
-{% extends 'tasks/base.html' %} {% block content %}
+{% extends 'tasks/base.html' %}
+{% block content %}
 <div class="container py-5">
-  <div class="card shadow-lg">
+  <div class="card shadow-lg border-0 rounded-3">
     <div class="card-body">
       <h1 class="text-center text-primary mb-4">
         Tentang Aplikasi Task Manager
       </h1>
 
-      <p class="fs-5">
+      <p class="fs-5 mb-4">
         Task Manager adalah aplikasi yang dirancang untuk membantu pengguna
         mengelola daftar tugas mereka dengan mudah dan efisien. Dengan antarmuka
         yang sederhana dan fitur yang lengkap, pengguna dapat membuat, mengedit,
@@ -29,7 +30,7 @@
       </ul>
 
       <div class="text-center mt-4">
-        <a href="{% url 'home' %}" class="btn btn-primary btn-lg">
+        <a href="{% url 'home' %}" class="btn btn-outline-primary btn-lg">
           <i class="bi bi-house-door-fill"></i> Kembali ke Beranda
         </a>
       </div>

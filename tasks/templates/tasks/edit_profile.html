@@ -10,24 +10,26 @@
       <form method="POST">
         {% csrf_token %}
 
-        <div class="row mb-3">
-          <label class="col-md-4 col-12 fw-bold">Username:</label>
-          <div class="col-md-8 col-12">{{ form.username }}</div>
+        <div class="mb-3">
+          <label for="username" class="form-label fw-bold">Username:</label>
+          <div class="input-group">{{ form.username }}</div>
         </div>
 
-        <div class="row mb-3">
-          <label class="col-md-4 col-12 fw-bold">Email:</label>
-          <div class="col-md-8 col-12">{{ form.email }}</div>
+        <div class="mb-3">
+          <label for="email" class="form-label fw-bold">Email:</label>
+          <div class="input-group">{{ form.email }}</div>
         </div>
 
-        <div class="row mb-3">
-          <label class="col-md-4 col-12 fw-bold">Nama Depan:</label>
-          <div class="col-md-8 col-12">{{ form.first_name }}</div>
+        <div class="mb-3">
+          <label for="first_name" class="form-label fw-bold">Nama Depan:</label>
+          <div class="input-group">{{ form.first_name }}</div>
         </div>
 
-        <div class="row mb-3">
-          <label class="col-md-4 col-12 fw-bold">Nama Belakang:</label>
-          <div class="col-md-8 col-12">{{ form.last_name }}</div>
+        <div class="mb-3">
+          <label for="last_name" class="form-label fw-bold"
+            >Nama Belakang:</label
+          >
+          <div class="input-group">{{ form.last_name }}</div>
         </div>
 
         <!-- Action Buttons -->
@@ -36,9 +38,9 @@
         >
           <a
             href="{% url 'home' %}"
-            class="btn btn-primary mb-2 mb-md-0 me-md-2"
+            class="btn btn-outline-primary mb-2 mb-md-0 me-md-2"
           >
-            Kembali ke Halaman Utama
+            Kembali ke Beranda
           </a>
 
           <div class="d-flex flex-column flex-md-row">
@@ -47,7 +49,7 @@
             </button>
             <a
               href="{% url 'profile' %}"
-              class="btn btn-secondary mb-2 mb-md-0"
+              class="btn btn-outline-secondary mb-2 mb-md-0"
             >
               Batal
             </a>
