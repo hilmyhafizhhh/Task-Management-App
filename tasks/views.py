@@ -156,3 +156,30 @@ class TaskDetailView(DetailView):
     template_name = 'tasks/task_detail.html'
     context_object_name = 'task'
 
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
+# Halaman profil pengguna
+@login_required
+def profile(request):
+    return render(request, 'tasks/profile.html')
+
+from .forms import EditProfileForm
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+
+# View untuk mengedit profil pengguna
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = EditProfileForm(instance=request.user)
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'tasks/edit_profile.html', context)
