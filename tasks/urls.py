@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
+from .views import add_comment
+from .views import ActivityLogView
 
 urlpatterns = [
     path('', views.LandingPageView.as_view(), name='landing_page'),  # Landing page
@@ -22,4 +24,7 @@ urlpatterns = [
     path('task/<int:pk>/', views.TaskDetailView.as_view(), name='task_detail'),
     path('profile/', views.profile, name='profile'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),
+    path('tasks/<int:task_id>/add_comment/', add_comment, name='add_comment'),
+    path('activity_log/', ActivityLogView.as_view(), name='activity_log'),
+
 ]

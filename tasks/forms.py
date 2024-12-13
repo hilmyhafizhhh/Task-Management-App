@@ -23,3 +23,15 @@ class EditProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'first_name', 'last_name')
+
+# tasks/forms.py
+from django import forms
+from .models import Comment
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('content',)
+        widgets = {
+            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+        }

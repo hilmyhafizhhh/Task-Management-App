@@ -21,12 +21,35 @@
         background-color: #343a40;
         color: #fff;
       }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .navbar {
+        background-color: #007bff;
+      }
+      .navbar-brand,
+      .nav-link {
+        color: #fff !important;
+      }
+      .navbar-nav .nav-item .nav-link:hover {
+        color: #f8f9fa;
+      }
+      /* Responsif */
+      @media (max-width: 768px) {
+        .navbar-brand {
+          font-size: 1.2rem;
+        }
+        .table {
+          font-size: 0.9rem;
+        }
+      }
     </style>
   </head>
   <body>
     {% extends 'tasks/base.html' %} {% block content %}
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'home' %}">Task Manager</a>
         <button
@@ -55,13 +78,28 @@
               <a class="nav-link" href="{% url 'profile' %}">Profil</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="{% url 'activity_log' %}"
+                >Log Aktivitas</a
+              >
+            </li>
+
+            <li class="nav-item">
               <form method="post" action="{% url 'logout' %}" class="d-inline">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-outline-danger ms-2">
+                <button
+                  type="submit"
+                  class="btn btn-outline-danger ms-2"
+                  style="
+                    color: white;
+                    background-color: #dc3545;
+                    border-color: #dc3545;
+                  "
+                >
                   Logout
                 </button>
               </form>
             </li>
+
             {% else %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'login' %}">Login</a>
@@ -104,58 +142,55 @@
       </div>
 
       <!-- Tabel Tugas -->
-      <table
-        class="table table-bordered table-hover"
-        style="table-layout: fixed; width: 100%"
-      >
-        <thead>
-          <tr>
-            <th style="width: 10%">No</th>
-            <th style="width: 50%">Judul</th>
-            <th style="width: 20%">Status</th>
-            <th style="width: 20%">Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for task in tasks %}
-          <tr>
-            <td>{{ forloop.counter|add:tasks.start_index|add:"-1" }}</td>
-            <td>{{ task.title }}</td>
-            <td>
-              {% if task.completed %}
-              <span class="badge bg-success">Selesai</span>
-              {% else %}
-              <span class="badge bg-warning text-dark">Belum Selesai</span>
-              {% endif %}
-            </td>
-            <td>
-              <a
-                href="{% url 'task_detail' task.pk %}"
-                class="btn btn-sm btn-info"
-                >Lihat Detail</a
-              >
-
-              <a
-                href="{% url 'edit_task' task.pk %}"
-                class="btn btn-sm btn-primary"
-                >Edit</a
-              >
-
-              <a
-                href="{% url 'delete_task' task.pk %}"
-                class="btn btn-sm btn-danger"
-                onclick="return confirm('Apakah Anda yakin ingin menghapus tugas ini?');"
-                >Hapus</a
-              >
-            </td>
-          </tr>
-          {% empty %}
-          <tr>
-            <td colspan="4" class="text-center">Tidak ada tugas.</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th style="width: 10%">No</th>
+              <th style="width: 50%">Judul</th>
+              <th style="width: 20%">Status</th>
+              <th style="width: 20%">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for task in tasks %}
+            <tr>
+              <td>{{ forloop.counter|add:tasks.start_index|add:"-1" }}</td>
+              <td>{{ task.title }}</td>
+              <td>
+                {% if task.completed %}
+                <span class="badge bg-success">Selesai</span>
+                {% else %}
+                <span class="badge bg-warning text-dark">Belum Selesai</span>
+                {% endif %}
+              </td>
+              <td>
+                <a
+                  href="{% url 'task_detail' task.pk %}"
+                  class="btn btn-sm btn-info"
+                  >Lihat Detail</a
+                >
+                <a
+                  href="{% url 'edit_task' task.pk %}"
+                  class="btn btn-sm btn-primary"
+                  >Edit</a
+                >
+                <a
+                  href="{% url 'delete_task' task.pk %}"
+                  class="btn btn-sm btn-danger"
+                  onclick="return confirm('Apakah Anda yakin ingin menghapus tugas ini?');"
+                  >Hapus</a
+                >
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="4" class="text-center">Tidak ada tugas.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
 
       <!-- Paginasi -->
       <div class="d-flex justify-content-center mt-4">
@@ -210,6 +245,7 @@
       </div>
     </div>
     {% endblock %}
+
     <!-- Tambahkan Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   </body>

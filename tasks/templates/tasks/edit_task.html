@@ -1,20 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Tugas</title>
-  </head>
-  <body>
-    {% extends 'tasks/base.html' %} {% block content %}
-    <h1 class="text-center mb-4">Edit Tugas</h1>
+{% extends 'tasks/base.html' %} {% block content %}
+<div class="container mt-5">
+  <div class="card shadow-sm mx-auto" style="max-width: 600px">
+    <div class="card-header bg-primary text-white">
+      <h2 class="mb-0">Edit Tugas</h2>
+    </div>
 
-    <form method="POST" class="card p-4">
-      {% csrf_token %} {{ form.as_p }}
+    <div class="card-body">
+      <form method="POST">
+        {% csrf_token %} {{ form.as_p }}
 
-      <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-      <a href="{% url 'home' %}" class="btn btn-secondary">Kembali</a>
-    </form>
-    {% endblock %}
-  </body>
-</html>
+        <div
+          class="d-flex flex-column flex-md-row justify-content-between mt-4"
+        >
+          <a
+            href="{% url 'home' %}"
+            class="btn btn-outline-primary mb-2 mb-md-0 me-md-2"
+          >
+            Kembali ke Beranda
+          </a>
+
+          <div class="d-flex flex-column flex-md-row">
+            <button
+              type="submit"
+              class="btn btn-success mb-2 mb-md-0 me-md-2 w-100 w-md-auto"
+            >
+              Simpan Perubahan
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

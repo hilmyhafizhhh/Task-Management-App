@@ -117,6 +117,15 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('home')
     login_url = 'login'
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        Log.objects.create(
+            user=self.request.user,
+            action=f"Membuat tugas: {form.instance.title}",
+            timestamp=now()
+        )
+        return response
+
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from .models import Task
@@ -130,13 +139,28 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('home')
     login_url = 'login'
 
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        Log.objects.create(
+            user=self.request.user,
+            action=f"Memperbarui tugas: {form.instance.title}",
+            timestamp=now()
+        )
+        return response
+
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Task
 
 def delete_task(request, pk):
-    task = get_object_or_404(Task, pk=pk)  # Ambil tugas berdasarkan ID (pk)
-    task.delete()  # Hapus tugas dari database
-    return redirect('home')  # Arahkan ke halaman utama setelah menghapus   
+    task = get_object_or_404(Task, pk=pk)
+    Log.objects.create(
+        user=request.user,
+        action=f"Menghapus tugas: {task.title}",
+        timestamp=now()
+    )
+    task.delete()
+    return redirect('home')
+ 
 
 from django.views.generic import TemplateView
 
@@ -183,3 +207,43 @@ def edit_profile(request):
         'form': form,
     }
     return render(request, 'tasks/edit_profile.html', context)
+
+from django.shortcuts import get_object_or_404, redirect
+from .models import Task, Comment
+from .forms import CommentForm
+
+def add_comment(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.task = task
+            comment.author = request.user
+            comment.save()
+
+            Log.objects.create(
+                user=request.user,
+                action=f"Menambahkan komentar pada tugas: {task.title}",
+                timestamp=now()
+            )
+
+            return redirect('task_detail', pk=task.id)
+    else:
+        form = CommentForm()
+
+    return render(request, 'tasks/task_detail.html', {'task': task, 'form': form})
+
+
+
+from .models import Log
+from django.utils.timezone import now
+
+from django.views.generic import ListView
+
+class ActivityLogView(LoginRequiredMixin, ListView):
+    model = Log
+    template_name = 'tasks/activity_log.html'
+    context_object_name = 'logs'
+    ordering = ['-timestamp']

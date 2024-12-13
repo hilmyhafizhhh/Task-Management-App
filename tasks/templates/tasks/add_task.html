@@ -1,19 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tambah Tugas</title>
-  </head>
-  <body>
-    {% extends 'tasks/base.html' %} {% block content %}
-    <h1 class="text-center mb-4">Tambah Tugas</h1>
+{% extends 'tasks/base.html' %} {% block content %}
+<div class="container py-5">
+  <h1 class="text-center text-primary mb-4">Tambah Tugas Baru</h1>
 
-    <form method="POST" class="card p-4">
-      {% csrf_token %} {{ form.as_p }}
-      <button type="submit" class="btn btn-success">Tambah Tugas</button>
-      <a href="{% url 'home' %}" class="btn btn-secondary">Kembali</a>
-    </form>
-    {% endblock %}
-  </body>
-</html>
+  <div class="card shadow-lg border-0 rounded-3">
+    <div class="card-body">
+      <form method="POST">
+        {% csrf_token %}
+
+        <!-- Judul Tugas -->
+        <div class="mb-3">
+          <label for="task_title" class="form-label">Judul Tugas</label>
+          <input
+            type="text"
+            class="form-control"
+            id="task_title"
+            name="title"
+            required
+          />
+        </div>
+
+        <!-- Deskripsi Tugas -->
+        <div class="mb-3">
+          <label for="task_description" class="form-label"
+            >Deskripsi Tugas</label
+          >
+          <textarea
+            class="form-control"
+            id="task_description"
+            name="description"
+            rows="4"
+          ></textarea>
+        </div>
+
+        <!-- Status Tugas -->
+        <div class="mb-3">
+          <label for="task_status" class="form-label">Status Tugas</label>
+          <select class="form-select" id="task_status" name="status" required>
+            <option value="pending">Belum Selesai</option>
+            <option value="completed">Selesai</option>
+          </select>
+        </div>
+
+        <!-- Tombol Kirim -->
+        <div class="text-center mt-4">
+          <button type="submit" class="btn btn-outline-primary btn-lg w-100">
+            <i class="bi bi-check-circle-fill"></i> Tambah Tugas
+          </button>
+        </div>
+      </form>
+
+      <!-- Tombol Kembali -->
+      <div class="text-center mt-3">
+        <a
+          href="{% url 'home' %}"
+          class="btn btn-outline-primary btn-lg w-100 w-md-auto"
+        >
+          <i class="bi bi-house-door-fill"></i> Kembali ke Beranda
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

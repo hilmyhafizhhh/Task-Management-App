@@ -27,11 +27,35 @@
             {% if task.completed %} Selesai {% else %} Belum Selesai {% endif %}
           </p>
 
+          <!-- Form Komentar -->
+          <hr />
+          <h3>Tambahkan Komentar</h3>
+          <form method="POST" action="{% url 'add_comment' task.id %}">
+            {% csrf_token %} {{ form.as_p }}
+            <button type="submit" class="btn btn-primary mt-3">
+              Tambah Komentar
+            </button>
+          </form>
+
+          <!-- Daftar Komentar -->
+          <hr />
+          <h3>Komentar</h3>
+          {% for comment in task.comments.all %}
+          <div class="border-bottom py-2">
+            <p><strong>{{ comment.author }}:</strong> {{ comment.content }}</p>
+            <small class="text-muted"
+              >{{ comment.created_at|date:"d M Y, H:i" }}</small
+            >
+          </div>
+          {% empty %}
+          <p>Belum ada komentar.</p>
+          {% endfor %}
+
           <!-- Kembali ke Halaman Utama -->
           <div class="mt-4">
-            <a href="{% url 'home' %}" class="btn btn-primary btn-lg"
-              >Kembali ke Beranda</a
-            >
+            <a href="{% url 'home' %}" class="btn btn-primary btn-lg">
+              Kembali ke Beranda
+            </a>
           </div>
         </div>
       </div>

@@ -29,3 +29,4 @@ class LogAdmin(admin.ModelAdmin):
     list_display = ('action', 'user', 'timestamp')
     list_filter = ('action', 'timestamp')
     search_fields = ('action',)
+
