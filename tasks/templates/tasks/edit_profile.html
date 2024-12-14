@@ -13,11 +13,19 @@
         <div class="mb-3">
           <label for="username" class="form-label fw-bold">Username:</label>
           <div class="input-group">{{ form.username }}</div>
+          {% if form.username.errors %}
+          <div class="text-danger small">
+            {{ form.username.errors|striptags }}
+          </div>
+          {% endif %}
         </div>
 
         <div class="mb-3">
           <label for="email" class="form-label fw-bold">Email:</label>
           <div class="input-group">{{ form.email }}</div>
+          {% if form.email.errors %}
+          <div class="text-danger small">{{ form.email.errors|striptags }}</div>
+          {% endif %}
         </div>
 
         <div class="mb-3">
@@ -32,7 +40,6 @@
           <div class="input-group">{{ form.last_name }}</div>
         </div>
 
-        <!-- Action Buttons -->
         <div
           class="d-flex flex-column flex-md-row justify-content-between mt-4"
         >
@@ -40,18 +47,26 @@
             href="{% url 'home' %}"
             class="btn btn-outline-primary mb-2 mb-md-0 me-md-2"
           >
-            Kembali ke Beranda
+            <i class="bi bi-house-door-fill"></i> Kembali ke Beranda
           </a>
 
           <div class="d-flex flex-column flex-md-row">
-            <button type="submit" class="btn btn-success mb-2 mb-md-0 me-md-2">
-              Simpan Perubahan
+            <button
+              type="submit"
+              class="btn btn-success mb-2 mb-md-0 me-md-2"
+              id="saveButton"
+              onclick="this.disabled = true; this.innerHTML = '<i class=\'bi bi-arrow-repeat spinner-border\'></i> Menyimpan...'; this.form.submit();"
+            >
+              <i class="bi bi-check-circle-fill"></i> Simpan Perubahan
             </button>
+
+            <!-- Batal dengan konfirmasi -->
             <a
               href="{% url 'profile' %}"
               class="btn btn-outline-secondary mb-2 mb-md-0"
+              onclick="return confirm('Apakah Anda yakin ingin membatalkan perubahan?');"
             >
-              Batal
+              <i class="bi bi-x-circle-fill"></i> Batal
             </a>
           </div>
         </div>

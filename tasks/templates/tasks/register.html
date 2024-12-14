@@ -10,18 +10,19 @@
     />
     <style>
       body {
-        background-color: #f8f9fa;
-        font-family: Arial, sans-serif;
+        background-color: #f8f9fa; /* Warna latar belakang yang terang */
+        font-family: Arial, sans-serif; /* Font standar */
       }
       .container {
-        max-width: 500px;
+        max-width: 500px; /* Membatasi lebar container */
       }
       .form-label {
-        font-weight: bold;
+        font-weight: bold; /* Membuat label form lebih menonjol */
       }
     </style>
   </head>
   <body>
+    <!-- Navbar bagian atas -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Task Manager</a>
@@ -30,8 +31,11 @@
 
     <div class="container my-5">
       <h2 class="text-center mb-4">Register</h2>
+      <!-- Form untuk registrasi pengguna -->
       <form method="POST">
         {% csrf_token %}
+
+        <!-- Input untuk Username -->
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input
@@ -42,6 +46,8 @@
             required
           />
         </div>
+
+        <!-- Input untuk Email -->
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
           <input
@@ -52,6 +58,8 @@
             required
           />
         </div>
+
+        <!-- Input untuk First Name -->
         <div class="mb-3">
           <label for="first_name" class="form-label">First Name</label>
           <input
@@ -62,6 +70,8 @@
             required
           />
         </div>
+
+        <!-- Input untuk Last Name -->
         <div class="mb-3">
           <label for="last_name" class="form-label">Last Name</label>
           <input
@@ -72,6 +82,8 @@
             required
           />
         </div>
+
+        <!-- Input untuk Password -->
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
           <input
@@ -82,6 +94,8 @@
             required
           />
         </div>
+
+        <!-- Input untuk Confirm Password -->
         <div class="mb-3">
           <label for="confirm_password" class="form-label"
             >Confirm Password</label
@@ -95,6 +109,7 @@
           />
         </div>
 
+        <!-- Menampilkan pesan kesalahan jika ada -->
         {% if form.errors %}
         <div class="alert alert-danger mt-3">
           <ul>
@@ -105,6 +120,7 @@
         </div>
         {% endif %}
 
+        <!-- Tombol Submit untuk registrasi -->
         <div class="text-center">
           <button type="submit" class="btn btn-outline-primary">
             Register
@@ -112,6 +128,7 @@
         </div>
       </form>
 
+      <!-- Link ke halaman login jika sudah memiliki akun -->
       <p class="text-center mt-3">
         Already have an account? <a href="{% url 'login' %}">Login here</a>
       </p>

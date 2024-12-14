@@ -1,23 +1,32 @@
 {% extends 'tasks/base.html' %} {% block content %}
 <div class="container mt-5">
+  <!-- Menggunakan row untuk memusatkan card di tengah layar -->
   <div class="row justify-content-center">
+    <!-- Kolom untuk card profil dengan lebar maksimal 8 kolom pada ukuran medium -->
     <div class="col-md-8">
+      <!-- Card untuk menampilkan profil pengguna -->
       <div class="card shadow-lg border-0 rounded-3">
+        <!-- Header Card dengan judul Profil Pengguna -->
         <div class="card-header bg-primary text-white text-center">
           <h2>Profil Pengguna</h2>
         </div>
 
         <div class="card-body p-4">
+          <!-- Menampilkan informasi profil pengguna -->
+
+          <!-- Baris untuk Username -->
           <div class="row mb-3">
             <div class="col-sm-4 font-weight-bold">Username:</div>
             <div class="col-sm-8">{{ user.username }}</div>
           </div>
 
+          <!-- Baris untuk Email -->
           <div class="row mb-3">
             <div class="col-sm-4 font-weight-bold">Email:</div>
             <div class="col-sm-8">{{ user.email }}</div>
           </div>
 
+          <!-- Baris untuk Nama Lengkap -->
           <div class="row mb-3">
             <div class="col-sm-4 font-weight-bold">Nama Lengkap:</div>
             <div class="col-sm-8">
@@ -25,12 +34,14 @@
             </div>
           </div>
 
+          <!-- Baris untuk Tanggal Bergabung, menggunakan format tanggal -->
           <div class="row mb-3">
             <div class="col-sm-4 font-weight-bold">Tanggal Bergabung:</div>
             <div class="col-sm-8">{{ user.date_joined|date:"d M Y" }}</div>
           </div>
         </div>
 
+        <!-- Footer Card dengan tombol Edit Profil dan Kembali ke Beranda -->
         <div class="card-footer text-center">
           <a
             href="{% url 'edit_profile' %}"

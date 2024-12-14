@@ -1,21 +1,25 @@
 {% extends 'tasks/base.html' %} {% block content %}
 <div class="container mt-4">
   <div class="row">
-    <!-- Card for Task Details -->
+    <!-- Card untuk Detail Tugas -->
     <div class="col-md-8 offset-md-2">
       <div class="card shadow-sm border-light">
         <div class="card-header bg-primary text-white">
           <h1 class="mb-0">{{ task.title }}</h1>
+          <!-- Menampilkan judul tugas -->
         </div>
         <div class="card-body">
           <!-- Deskripsi Tugas -->
           <h5 class="card-subtitle mb-3 text-muted">Deskripsi Tugas</h5>
 
           {% if task.description %}
+          <!-- Memeriksa jika deskripsi ada -->
           <p class="card-text">{{ task.description }}</p>
+          <!-- Menampilkan deskripsi tugas -->
           {% else %}
           <p class="card-text text-muted">
             Tidak ada deskripsi untuk tugas ini.
+            <!-- Menampilkan pesan jika deskripsi tidak ada -->
           </p>
           {% endif %}
 
@@ -26,13 +30,15 @@
           >
             {% if task.completed %} Selesai {% else %} Belum Selesai {% endif %}
           </p>
+          <!-- Menampilkan status tugas dengan warna badge berdasarkan status tugas (selesai atau belum) -->
 
-          <!-- Form Komentar -->
+          <!-- Form untuk Menambahkan Komentar -->
           <hr />
           <h3>Tambahkan Komentar</h3>
           <form method="POST" action="{% url 'add_comment' task.id %}">
             {% csrf_token %} {{ form.as_p }}
-            <button type="submit" class="btn btn-primary mt-3">
+            <!-- CSRF token untuk keamanan dan form input komentar -->
+            <button type="submit" class="btn btn-outline-primary mt-3">
               Tambah Komentar
             </button>
           </form>
@@ -41,19 +47,23 @@
           <hr />
           <h3>Komentar</h3>
           {% for comment in task.comments.all %}
+          <!-- Looping untuk menampilkan komentar terkait tugas -->
           <div class="border-bottom py-2">
             <p><strong>{{ comment.author }}:</strong> {{ comment.content }}</p>
+            <!-- Menampilkan nama penulis dan isi komentar -->
             <small class="text-muted"
               >{{ comment.created_at|date:"d M Y, H:i" }}</small
             >
+            <!-- Menampilkan tanggal dan waktu komentar dibuat -->
           </div>
           {% empty %}
           <p>Belum ada komentar.</p>
+          <!-- Pesan jika belum ada komentar -->
           {% endfor %}
 
-          <!-- Kembali ke Halaman Utama -->
+          <!-- Tombol untuk Kembali ke Halaman Utama -->
           <div class="mt-4">
-            <a href="{% url 'home' %}" class="btn btn-primary btn-lg">
+            <a href="{% url 'home' %}" class="btn btn-outline-primary btn-lg">
               Kembali ke Beranda
             </a>
           </div>

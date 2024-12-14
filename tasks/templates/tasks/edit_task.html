@@ -12,20 +12,32 @@
         <div
           class="d-flex flex-column flex-md-row justify-content-between mt-4"
         >
+          <!-- Kembali ke Beranda -->
           <a
             href="{% url 'home' %}"
             class="btn btn-outline-primary mb-2 mb-md-0 me-md-2"
           >
-            Kembali ke Beranda
+            <i class="bi bi-house-door-fill"></i> Kembali ke Beranda
           </a>
 
           <div class="d-flex flex-column flex-md-row">
+            <!-- Simpan Perubahan -->
             <button
               type="submit"
-              class="btn btn-success mb-2 mb-md-0 me-md-2 w-100 w-md-auto"
+              class="btn btn-success mb-2 mb-md-0 me-md-2"
+              onclick="this.disabled = true; this.innerHTML = '<i class=\'bi bi-arrow-repeat spinner-border\'></i> Menyimpan...'; this.form.submit();"
             >
-              Simpan Perubahan
+              <i class="bi bi-check-circle-fill"></i> Simpan Perubahan
             </button>
+
+            <!-- Batal -->
+            <a
+              href="{% url 'home' %}"
+              class="btn btn-outline-secondary mb-2 mb-md-0"
+              onclick="return confirm('Apakah Anda yakin ingin membatalkan perubahan?');"
+            >
+              <i class="bi bi-x-circle-fill"></i> Batal
+            </a>
           </div>
         </div>
       </form>

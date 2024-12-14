@@ -1,9 +1,12 @@
 {% extends 'tasks/base.html' %} {% block content %}
 <div class="container py-5">
+  <!-- Judul Halaman -->
   <h1 class="text-center text-primary mb-4">Tambah Tugas Baru</h1>
 
+  <!-- Kartu Utama -->
   <div class="card shadow-lg border-0 rounded-3">
     <div class="card-body">
+      <!-- Form Tambah Tugas -->
       <form method="POST">
         {% csrf_token %}
 
@@ -43,7 +46,12 @@
 
         <!-- Tombol Kirim -->
         <div class="text-center mt-4">
-          <button type="submit" class="btn btn-outline-primary btn-lg w-100">
+          <button
+            type="submit"
+            class="btn btn-outline-primary btn-lg w-100"
+            id="addTaskButton"
+            onclick="this.disabled = true; this.innerHTML = '<i class=\'bi bi-arrow-repeat spinner-border\'></i> Menyimpan...'; this.form.submit();"
+          >
             <i class="bi bi-check-circle-fill"></i> Tambah Tugas
           </button>
         </div>

@@ -1,11 +1,14 @@
 {% extends 'tasks/base.html' %} {% block content %}
 <div class="container py-5">
+  <!-- Kartu utama untuk menampilkan konten "Tentang Aplikasi" -->
   <div class="card shadow-lg border-0 rounded-3">
     <div class="card-body">
+      <!-- Judul halaman -->
       <h1 class="text-center text-primary mb-4">
         Tentang Aplikasi Task Manager
       </h1>
 
+      <!-- Paragraf pengantar -->
       <p class="fs-5 mb-4">
         Task Manager adalah aplikasi yang dirancang untuk membantu pengguna
         mengelola daftar tugas dengan lebih efisien. Dengan antarmuka yang ramah
@@ -14,12 +17,14 @@
         belum selesai.
       </p>
 
+      <!-- Penjelasan umum tentang aplikasi -->
       <p class="fs-5 mb-4">
         Aplikasi ini sangat cocok digunakan untuk individu atau tim yang
         membutuhkan manajemen tugas yang lebih terorganisir. Berikut adalah
         beberapa fitur utama yang ditawarkan:
       </p>
 
+      <!-- Daftar fitur aplikasi -->
       <ul class="list-group list-group-flush mb-4">
         <li class="list-group-item">
           <strong>Pembuatan Tugas:</strong> Dengan mudah menambahkan tugas baru
@@ -36,6 +41,7 @@
         </li>
       </ul>
 
+      <!-- Tombol untuk kembali ke beranda -->
       <div class="text-center mt-4">
         <a href="{% url 'home' %}" class="btn btn-outline-primary btn-lg">
           <i class="bi bi-house-door-fill"></i> Kembali ke Beranda

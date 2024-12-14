@@ -1,44 +1,40 @@
 from django.db import models
+from django.contrib.auth.models import User  # Mengimpor User model dari django
 
+# Model Task
 class Task(models.Model):
     title = models.CharField(max_length=200)  # Memperbarui max_length menjadi 200
     description = models.TextField(blank=True, null=True)  # Membuat description opsional
     completed = models.BooleanField(default=False)  # Ganti nama dari `done` ke `completed`
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)  # Menyimpan waktu pembuatan
 
     def __str__(self):
-        return self.title
-
-from django.db import models
-from django.contrib.auth.models import User
+        return self.title  # Menampilkan judul task ketika dipanggil
 
 # Model Category
 class Category(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=100)  # Nama kategori
+    description = models.TextField(blank=True, null=True)  # Deskripsi kategori (opsional)
+    created_at = models.DateTimeField(auto_now_add=True)  # Waktu pembuatan kategori
 
     def __str__(self):
-        return self.name
+        return self.name  # Menampilkan nama kategori ketika dipanggil
 
 # Model Comment
 class Comment(models.Model):
-    task = models.ForeignKey('Task', on_delete=models.CASCADE, related_name='comments')
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    task = models.ForeignKey('Task', on_delete=models.CASCADE, related_name='comments')  # Menghubungkan komentar dengan task
+    author = models.ForeignKey(User, on_delete=models.CASCADE)  # Menghubungkan komentar dengan user
+    content = models.TextField()  # Konten komentar
+    created_at = models.DateTimeField(auto_now_add=True)  # Waktu pembuatan komentar
 
     def __str__(self):
-        return f'Comment by {self.author.username} on {self.task.title}'
+        return f'Comment by {self.author.username} on {self.task.title}'  # Menampilkan info komentar
 
 # Model Log
-from django.db import models
-from django.contrib.auth.models import User
-
 class Log(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    action = models.CharField(max_length=255)
-    timestamp = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Menghubungkan log dengan user
+    action = models.CharField(max_length=255)  # Tindakan yang dilakukan oleh user
+    timestamp = models.DateTimeField(auto_now_add=True)  # Waktu tindakan dilakukan
 
     def __str__(self):
-        return f"{self.user.username} - {self.action} - {self.timestamp}"
+        return f"{self.user.username} - {self.action} - {self.timestamp}"  # Menampilkan log dengan format yang jelas

@@ -1,17 +1,24 @@
-from django.shortcuts import render
-from .models import Task
-from django.core.paginator import Paginator
-from django.views.generic import TemplateView
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-
-class LandingPageView(TemplateView):
-    template_name = 'tasks/landing_page.html'  # Menentukan template untuk halaman ini
-
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.utils.timezone import now
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, CreateView, UpdateView, DetailView, ListView
+from django.core.paginator import Paginator
+from django.contrib.auth.mixins import LoginRequiredMixin
 
+from .models import Task, Log, Comment
+from .forms import TaskForm, CommentForm, EditProfileForm
+
+
+# View untuk halaman landing
+class LandingPageView(TemplateView):
+    template_name = 'tasks/landing_page.html'
+
+
+# View untuk registrasi pengguna
 def register(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -20,7 +27,6 @@ def register(request):
         last_name = request.POST['last_name']
         password = request.POST['password']
 
-        # Buat user baru
         user = User.objects.create_user(
             username=username,
             email=email,
@@ -30,14 +36,10 @@ def register(request):
         )
         user.save()
         return redirect('login')
-
     return render(request, 'tasks/register.html')
 
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
-from django.contrib import messages
 
-
+# View untuk login pengguna
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -52,50 +54,37 @@ def login_view(request):
     
     return render(request, 'tasks/login.html')
 
-from django.shortcuts import render, redirect
-from django.contrib.auth import logout
 
-# View untuk logout
+# View untuk logout pengguna
 def logout_view(request):
-    logout(request)  # Logout pengguna
-    return redirect('landing')  # Arahkan pengguna ke halaman landing atau halaman lain
+    logout(request)
+    return redirect('landing')
 
 
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
-from django.views.generic import TemplateView
-from .models import Task
-from django.core.paginator import Paginator
-
-
+# View untuk halaman utama (daftar tugas)
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'tasks/home.html'
-    login_url = 'login'  # Pengguna yang belum login akan diarahkan ke halaman login
+    login_url = 'login'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         search_query = self.request.GET.get('search', '')
         status_filter = self.request.GET.get('status', 'all')
 
-        # Ambil query tugas
         tasks = Task.objects.all()
 
-        # Filter berdasarkan status
         if status_filter == 'completed':
             tasks = tasks.filter(completed=True)
         elif status_filter == 'pending':
             tasks = tasks.filter(completed=False)
 
-        # Filter berdasarkan pencarian
         if search_query:
             tasks = tasks.filter(title__icontains=search_query)
 
-        # Paginasi
-        paginator = Paginator(tasks, 5)  # Menampilkan 5 tugas per halaman
+        paginator = Paginator(tasks, 5)
         page_number = self.request.GET.get('page')
         tasks_page = paginator.get_page(page_number)
 
-        # Tambahkan data ke dalam context
         context['tasks'] = tasks_page
         context['search_query'] = search_query
         context['status_filter'] = status_filter
@@ -103,13 +92,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         return context
 
 
-from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy
-from .models import Task
-from .forms import TaskForm
-
-# Ganti fungsi add_task dengan CBV menggunakan CreateView
+# View untuk membuat tugas baru
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
@@ -126,16 +109,12 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         )
         return response
 
-from django.views.generic.edit import UpdateView
-from django.urls import reverse_lazy
-from .models import Task
-from .forms import TaskForm
 
+# View untuk memperbarui tugas
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
     form_class = TaskForm
     template_name = 'tasks/edit_task.html'
-    context_object_name = 'task'
     success_url = reverse_lazy('home')
     login_url = 'login'
 
@@ -148,9 +127,8 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
         )
         return response
 
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Task
 
+# View untuk menghapus tugas
 def delete_task(request, pk):
     task = get_object_or_404(Task, pk=pk)
     Log.objects.create(
@@ -160,37 +138,25 @@ def delete_task(request, pk):
     )
     task.delete()
     return redirect('home')
- 
 
-from django.views.generic import TemplateView
 
-# View untuk halaman About
+# View untuk halaman tentang
 class AboutView(TemplateView):
     template_name = 'tasks/about.html'
 
-# views.py
 
-# views.py
-from django.shortcuts import render
-from django.views.generic import DetailView
-from .models import Task
-
+# View untuk detail tugas
 class TaskDetailView(DetailView):
     model = Task
     template_name = 'tasks/task_detail.html'
     context_object_name = 'task'
 
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
 
-# Halaman profil pengguna
+# View untuk halaman profil pengguna
 @login_required
 def profile(request):
     return render(request, 'tasks/profile.html')
 
-from .forms import EditProfileForm
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 
 # View untuk mengedit profil pengguna
 @login_required
@@ -203,15 +169,11 @@ def edit_profile(request):
     else:
         form = EditProfileForm(instance=request.user)
 
-    context = {
-        'form': form,
-    }
+    context = {'form': form}
     return render(request, 'tasks/edit_profile.html', context)
 
-from django.shortcuts import get_object_or_404, redirect
-from .models import Task, Comment
-from .forms import CommentForm
 
+# View untuk menambahkan komentar pada tugas
 def add_comment(request, task_id):
     task = get_object_or_404(Task, id=task_id)
 
@@ -236,12 +198,7 @@ def add_comment(request, task_id):
     return render(request, 'tasks/task_detail.html', {'task': task, 'form': form})
 
 
-
-from .models import Log
-from django.utils.timezone import now
-
-from django.views.generic import ListView
-
+# View untuk melihat log aktivitas
 class ActivityLogView(LoginRequiredMixin, ListView):
     model = Log
     template_name = 'tasks/activity_log.html'
