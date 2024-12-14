@@ -39,7 +39,7 @@
             {% csrf_token %} {{ form.as_p }}
             <!-- CSRF token untuk keamanan dan form input komentar -->
             <button type="submit" class="btn btn-outline-primary mt-3">
-              Tambah Komentar
+              <i class="fas fa-comment-alt"></i> Tambah Komentar
             </button>
           </form>
 
@@ -64,7 +64,7 @@
           <!-- Tombol untuk Kembali ke Halaman Utama -->
           <div class="mt-4">
             <a href="{% url 'home' %}" class="btn btn-outline-primary btn-lg">
-              Kembali ke Beranda
+              <i class="fas fa-home"></i> Kembali ke Beranda
             </a>
           </div>
         </div>

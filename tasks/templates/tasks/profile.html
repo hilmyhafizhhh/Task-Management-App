@@ -1,4 +1,5 @@
 {% extends 'tasks/base.html' %} {% block content %}
+<!-- Kontainer utama untuk halaman profil pengguna -->
 <div class="container mt-5">
   <!-- Menggunakan row untuk memusatkan card di tengah layar -->
   <div class="row justify-content-center">
@@ -43,17 +44,19 @@
 
         <!-- Footer Card dengan tombol Edit Profil dan Kembali ke Beranda -->
         <div class="card-footer text-center">
+          <!-- Tombol untuk mengedit profil pengguna, dengan ikon edit -->
           <a
             href="{% url 'edit_profile' %}"
             class="btn btn-outline-warning mb-2 mb-md-0 me-md-2"
           >
-            Edit Profil
+            <i class="fas fa-edit"></i> Edit Profil
           </a>
+          <!-- Tombol untuk kembali ke halaman beranda, dengan ikon home -->
           <a
             href="{% url 'home' %}"
             class="btn btn-outline-primary mb-2 mb-md-0"
           >
-            Kembali ke Beranda
+            <i class="fas fa-home"></i> Kembali ke Beranda
           </a>
         </div>
       </div>
