@@ -1,9 +1,9 @@
 {% extends 'tasks/base.html' %} {% block content %}
 <div class="container mt-5">
-  <!-- Memusatkan card -->
+  <!-- Centering the Card -->
   <div class="card shadow-sm mx-auto" style="max-width: 600px">
     <div class="card-header bg-primary text-white">
-      <h2 class="mb-0">Edit Profil</h2>
+      <h2 class="mb-0">Edit Profile</h2>
     </div>
 
     <div class="card-body">
@@ -29,14 +29,12 @@
         </div>
 
         <div class="mb-3">
-          <label for="first_name" class="form-label fw-bold">Nama Depan:</label>
+          <label for="first_name" class="form-label fw-bold">First Name:</label>
           <div class="input-group">{{ form.first_name }}</div>
         </div>
 
         <div class="mb-3">
-          <label for="last_name" class="form-label fw-bold"
-            >Nama Belakang:</label
-          >
+          <label for="last_name" class="form-label fw-bold">Last Name:</label>
           <div class="input-group">{{ form.last_name }}</div>
         </div>
 
@@ -47,7 +45,7 @@
             href="{% url 'home' %}"
             class="btn btn-outline-primary mb-2 mb-md-0 me-md-2"
           >
-            <i class="bi bi-house-door-fill"></i> Kembali ke Beranda
+            <i class="bi bi-house-door-fill"></i> Back to Home
           </a>
 
           <div class="d-flex flex-column flex-md-row">
@@ -55,18 +53,18 @@
               type="submit"
               class="btn btn-success mb-2 mb-md-0 me-md-2"
               id="saveButton"
-              onclick="this.disabled = true; this.innerHTML = '<i class=\'bi bi-arrow-repeat spinner-border\'></i> Menyimpan...'; this.form.submit();"
+              onclick="this.disabled = true; this.innerHTML = '<i class=\'bi bi-arrow-repeat spinner-border\'></i> Saving...'; this.form.submit();"
             >
-              <i class="bi bi-check-circle-fill"></i> Simpan Perubahan
+              <i class="bi bi-check-circle-fill"></i> Save Changes
             </button>
 
-            <!-- Batal dengan konfirmasi -->
+            <!-- Cancel with Confirmation -->
             <a
               href="{% url 'profile' %}"
               class="btn btn-outline-secondary mb-2 mb-md-0"
-              onclick="return confirm('Apakah Anda yakin ingin membatalkan perubahan?');"
+              onclick="return confirm('Are you sure you want to cancel changes?');"
             >
-              <i class="bi bi-x-circle-fill"></i> Batal
+              <i class="bi bi-x-circle-fill"></i> Cancel
             </a>
           </div>
         </div>

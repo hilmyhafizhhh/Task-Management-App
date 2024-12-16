@@ -2,7 +2,7 @@
 <div class="container mt-5">
   <div class="card shadow-sm mx-auto" style="max-width: 600px">
     <div class="card-header bg-primary text-white">
-      <h2 class="mb-0">Edit Tugas</h2>
+      <h2 class="mb-0">Edit Task</h2>
     </div>
 
     <div class="card-body">
@@ -17,7 +17,7 @@
             href="{% url 'home' %}"
             class="btn btn-outline-primary mb-2 mb-md-0 me-md-2"
           >
-            <i class="bi bi-house-door-fill"></i> Kembali ke Beranda
+            <i class="bi bi-house-door-fill"></i> Back to Home
           </a>
 
           <div class="d-flex flex-column flex-md-row">
@@ -25,18 +25,18 @@
             <button
               type="submit"
               class="btn btn-success mb-2 mb-md-0 me-md-2"
-              onclick="this.disabled = true; this.innerHTML = '<i class=\'bi bi-arrow-repeat spinner-border\'></i> Menyimpan...'; this.form.submit();"
+              onclick="this.disabled = true; this.innerHTML = '<i class=\'bi bi-arrow-repeat spinner-border\'></i> Saving...'; this.form.submit();"
             >
-              <i class="bi bi-check-circle-fill"></i> Simpan Perubahan
+              <i class="bi bi-check-circle-fill"></i> Save Changes
             </button>
 
             <!-- Batal -->
             <a
               href="{% url 'home' %}"
               class="btn btn-outline-secondary mb-2 mb-md-0"
-              onclick="return confirm('Apakah Anda yakin ingin membatalkan perubahan?');"
+              onclick="return confirm('Are you sure you want to cancel the changes?');"
             >
-              <i class="bi bi-x-circle-fill"></i> Batal
+              <i class="bi bi-x-circle-fill"></i> Cancel
             </a>
           </div>
         </div>

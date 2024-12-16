@@ -1,18 +1,18 @@
 {% extends 'tasks/base.html' %} {% block content %}
 <div class="container py-5">
-  <!-- Judul Halaman -->
-  <h1 class="text-center text-primary mb-4">Tambah Tugas Baru</h1>
+  <!-- Page Title -->
+  <h1 class="text-center text-primary mb-4">Add New Task</h1>
 
-  <!-- Kartu Utama -->
+  <!-- Main Card -->
   <div class="card shadow-lg border-0 rounded-3">
     <div class="card-body">
-      <!-- Form Tambah Tugas -->
+      <!-- Add Task Form -->
       <form method="POST">
         {% csrf_token %}
 
-        <!-- Judul Tugas -->
+        <!-- Task Title -->
         <div class="mb-3">
-          <label for="task_title" class="form-label">Judul Tugas</label>
+          <label for="task_title" class="form-label">Task Title</label>
           <input
             type="text"
             class="form-control"
@@ -22,10 +22,10 @@
           />
         </div>
 
-        <!-- Deskripsi Tugas -->
+        <!-- Task Description -->
         <div class="mb-3">
           <label for="task_description" class="form-label"
-            >Deskripsi Tugas</label
+            >Task Description</label
           >
           <textarea
             class="form-control"
@@ -35,35 +35,35 @@
           ></textarea>
         </div>
 
-        <!-- Status Tugas -->
+        <!-- Task Status -->
         <div class="mb-3">
-          <label for="task_status" class="form-label">Status Tugas</label>
+          <label for="task_status" class="form-label">Task Status</label>
           <select class="form-select" id="task_status" name="status" required>
-            <option value="pending">Belum Selesai</option>
-            <option value="completed">Selesai</option>
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
           </select>
         </div>
 
-        <!-- Tombol Kirim -->
+        <!-- Submit Button -->
         <div class="text-center mt-4">
           <button
             type="submit"
             class="btn btn-outline-primary btn-lg w-100"
             id="addTaskButton"
-            onclick="this.disabled = true; this.innerHTML = '<i class=\'bi bi-arrow-repeat spinner-border\'></i> Menyimpan...'; this.form.submit();"
+            onclick="this.disabled = true; this.innerHTML = '<i class=\'bi bi-arrow-repeat spinner-border\'></i> Saving...'; this.form.submit();"
           >
-            <i class="bi bi-check-circle-fill"></i> Tambah Tugas
+            <i class="bi bi-check-circle-fill"></i> Add Task
           </button>
         </div>
       </form>
 
-      <!-- Tombol Kembali -->
+      <!-- Return Button -->
       <div class="text-center mt-3">
         <a
           href="{% url 'home' %}"
           class="btn btn-outline-primary btn-lg w-100 w-md-auto"
         >
-          <i class="bi bi-house-door-fill"></i> Kembali ke Beranda
+          <i class="bi bi-house-door-fill"></i> Back to Home
         </a>
       </div>
     </div>
